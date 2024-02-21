@@ -2,20 +2,15 @@ package com.pdm.ai_landmark_tensorflow.presentation
 
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
@@ -36,23 +31,39 @@ fun CameraPreview(
                 controller.bindToLifecycle(lifecycleOwner)
             }
         }, modifier = modifier
+            .drawWithContent {
+                val canvasWidth = size.width
+                val canvasHeight = size.height
+                val width = canvasWidth * .9f
+
+                drawContent()
+
+                drawRect(Color(0x99000000))
+
+                val offset = Offset(
+                    (canvasWidth - width) / 2,
+                    canvasHeight * .3f)
+
+                // Draws the rectangle in the middle 
+                drawRoundRect(
+                    topLeft = offset,
+                    size = Size(width, width),
+                    color = Color.Transparent,
+                    cornerRadius = CornerRadius(24.dp.toPx()),
+                    blendMode = BlendMode.SrcIn
+                )
+
+                // Draws the rectangle outline 
+                drawRoundRect(
+                    topLeft = offset,
+                    color = primaryColor,
+                    size = Size(width, width),
+                    cornerRadius = CornerRadius(24.dp.toPx()),
+                    style = Stroke(
+                        width = 2.dp.toPx()
+                    ),
+                    blendMode = BlendMode.Src
+                )
+            }
     )
-
-    Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
-        val blurRadius = 25f
-        val squareSize = size.minDimension * 0.8f
-        val squareTopLeft = Offset((size.width - squareSize) / 2, (size.height - squareSize) / 2)
-
-        drawRoundRect(
-            color = primaryColor,
-            topLeft = Offset(squareTopLeft.x - blurRadius, squareTopLeft.y - blurRadius),
-            size = Size(squareSize + blurRadius * 2, squareSize + blurRadius * 2),
-            style = Stroke(width = 6.dp.toPx()),
-            cornerRadius = CornerRadius(50f, 50f)
-        )
-    }
 }
