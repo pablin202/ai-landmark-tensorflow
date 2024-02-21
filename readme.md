@@ -7,8 +7,8 @@ The model utilized in this project is the Google-provided landmark recognition m
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
+![WhatsApp Image 2024-02-21 at 12 31 04](https://github.com/pablin202/ai-landmark-tensorflow/assets/8398530/337c017b-5ae8-4614-95b6-ef2e23244b6e)
+
 
 These screenshots showcase the application's interface and its functionality in action. The AI-powered landmark recognition feature is prominently displayed, demonstrating its accuracy and real-time processing capabilities.
 
